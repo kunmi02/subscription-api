@@ -1,0 +1,11 @@
+import multiprocessing
+
+bind = '0.0.0.0:[PORT]'  # sample '0.0.0.0:1234'
+workers = multiprocessing.cpu_count()  # or a smaller number
+user = 'your_linux_username'
+accesslog = '/path/to/your_app/logs/gunicorn.log'
+errorlog = '/path/to/your_app/logs/gunicorn.err.log'
+loglevel = 'debug'
+access_log_format = '[%(h)15s] (%(s)s) [%(D)8sms] %(r)s | %(b)sb'
+proc_name = 'your_app_name_gunicorn'
+timeout=120
