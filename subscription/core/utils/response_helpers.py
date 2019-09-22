@@ -13,13 +13,12 @@ def _make_api_response(response_data, http_code, meta=None):
     return jsonify(response_data), http_code
 
 
-def make_failure_response(http_code, internal_code, message, meta=None):
+def make_failure_response(http_code, message, meta=None):
 
     response_data = {
         'status': 'FAILURE',
         'error': {
             'code': http_code,
-            'unique_code': internal_code,
             'message': message
         }
     }
