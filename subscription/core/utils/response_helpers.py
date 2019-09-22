@@ -30,6 +30,7 @@ def make_success_response(response_data, http_code=200, meta=None):
 
     response_data = {
         'status': 'SUCCESS',
+        'code': http_code,
         'data': response_data
     }
 

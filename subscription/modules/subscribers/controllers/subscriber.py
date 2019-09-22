@@ -14,16 +14,18 @@ def add_email():
 
     if email_address is not None:
         query = Subscriber.query.filter(Subscriber.email_address ==
-                                        email_address)
-        if query:
+                                        email_address).first()
+
+        if query is not None:
             return make_failure_response('409', 'email already exist')
+
         subscriber_mail = Subscriber(email_address)
         db.session.add(subscriber_mail)
         db.session.commit()
 
         return make_created_response('Subscriber added successfully')
 
-    return 'subscribed not added succesfully'
+    return make_failure_response('409', 'Error in adding subscriber')
 
 
 @subscriber.route('/subscribers', methods=['GET'])
