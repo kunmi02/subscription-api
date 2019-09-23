@@ -9,11 +9,11 @@ api_v1 = Blueprint('api_v1', __name__,
                        url_prefix='/api/v1.0')
 
 
-@api_v1.route('/subscribers', methods=['POST'])
+@api_v1.route('/subscriptions', methods=['POST'])
 def add_subscriber():
     email_address = request.args.get('email_address')
 
-    if email_address is not None:
+    if email_address is not None and not email_address.isspace():
         query = Subscription.query.filter(Subscription.email_address ==
                                         email_address).first()
 
@@ -29,7 +29,7 @@ def add_subscriber():
     return make_failure_response(409, 'Error in adding subscriber')
 
 
-@api_v1.route('/subscribers', methods=['GET'])
+@api_v1.route('/subscriptions', methods=['GET'])
 def get_subscribers():
 
     query = Subscription.query
@@ -40,7 +40,7 @@ def get_subscribers():
     return make_success_response(response_data)
 
 
-@api_v1.route('/subscribers', methods=['DELETE'])
+@api_v1.route('/subscriptions', methods=['DELETE'])
 def delete_subscriber():
     email_address = request.args.get('email_address')
 
@@ -50,3 +50,5 @@ def delete_subscriber():
         db.session.commit()
 
         return make_success_response('Subscriber deleted')
+
+    return make_failure_response(409, 'Error')
