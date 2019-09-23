@@ -3,10 +3,10 @@ from flask import Flask
 
 def _setup_blueprints(app):
     from subscription.modules.subscribers.controllers import (
-       subscriber
+        subscriber
     )
     #
-    app.register_blueprint(subscriber.subscriber)
+    app.register_blueprint(subscriber.api_v1)
 
 
 def _bind_home_url(app):
