@@ -2,7 +2,7 @@ from flask import Flask
 
 
 def _setup_blueprints(app):
-    from subscription.modules.subscribers.controllers import (
+    from subscription.modules.ap1_v1.controllers import (
         subscriber
     )
     #
