@@ -13,7 +13,7 @@ api_v1 = Blueprint('api_v1', __name__,
 def add_subscriber():
     email_address = request.args.get('email_address')
 
-    if email_address is not None and not email_address.isspace():
+    if email_address is not None:
         query = Subscription.query.filter(Subscription.email_address ==
                                         email_address).first()
 
