@@ -9,8 +9,8 @@ def _setup_blueprints(app):
     app.register_blueprint(subscriber.api_v1)
 
 
-def _bind_home_url(app):
-    @app.route('/')  # DEBUG
+def _bind_home_url(app):  # DEBUG
+    @app.route('/')
     def index():
 
         return 'Welcome to Email Subscribers List.'
