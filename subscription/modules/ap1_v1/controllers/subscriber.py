@@ -17,9 +17,10 @@ def add_subscriber():
     if email_address is None:
         return make_failure_response(400, 'Bad Request')
 
-    subscriber = Subscription.query.filter(Subscription.email == email_address).first()
+    subscription = Subscription.query.filter(Subscription.email ==
+                                        email_address).first()
 
-    if subscriber is not None:
+    if subscription is not None:
         return make_failure_response(409, 'Subscriber already exists')
 
     subscription = Subscription(email=email_address)
