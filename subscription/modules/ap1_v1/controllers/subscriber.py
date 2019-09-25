@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from sqlalchemy import exc
+from sqlalchemy.orm.exc import NoResultFound
 
 
 from subscription.core.models import db, Subscription
@@ -51,7 +51,7 @@ def delete_subscription():
 
     try:
         Subscription.query.filter(Subscription.email == email_address).one()
-    except exc.SQLAlchemyError:
+    except NoResultFound:
         return make_failure_response(404, 'Subscriber not found')
 
     Subscription.query.filter(Subscription.email == email_address).delete()
