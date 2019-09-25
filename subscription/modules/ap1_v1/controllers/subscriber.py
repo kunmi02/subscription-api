@@ -14,18 +14,19 @@ api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1.0')
 def add_subscriber():
     email_address = request.args.get('email_address')
 
-    if email_address is not None:
-        email = Subscription.query.filter(Subscription.email ==
-                                          email_address).first()
+    if email_address is None:
+        return make_failure_response(403, 'Error')
 
-        if email is not None:
-            return make_failure_response(409, 'email already exists')
+    email = Subscription.query.filter(Subscription.email == email_address).first()
 
-        subscriber = Subscription(email=email_address)
-        db.session.add(subscriber)
-        db.session.commit()
+    if email is not None:
+        return make_failure_response(409, 'email already exists')
 
-        return make_created_response('Subscriber added successfully')
+    subscriber = Subscription(email=email_address)
+    db.session.add(subscriber)
+    db.session.commit()
+
+    return make_created_response('Subscriber added successfully')
 
 
 @api_v1.route('/subscriptions', methods=['GET'])
@@ -42,10 +43,15 @@ def get_subscribers():
 def delete_subscriber():
     email_address = request.args.get('email_address')
 
-    if email_address is not None:
-        Subscription.query.filter(Subscription.email == email_address).delete()
-        db.session.commit()
+    if email_address is None:
+        return make_failure_response(409, 'Error')
 
-        return make_success_response('Subscriber deleted')
+    try:
+        Subscription.query.filter(Subscription.email == email_address).one()
+    except:
+        return make_failure_response(403, 'Subscriber not found')
 
-    return make_failure_response(409, 'Error')
+    Subscription.query.filter(Subscription.email == email_address).delete()
+    db.session.commit()
+
+    return make_success_response('Subscriber deleted')

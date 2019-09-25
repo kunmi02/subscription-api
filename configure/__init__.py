@@ -13,7 +13,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class BaseConfig(object):
     SECRET_KEY = 'your-super-secret-key'
     LOG_REQUESTS = True
-    USE_DUMMY_GATEWAY_RESPONSES = False
 
     # pagination
     PAGINATION_DEFAULT_PAGE = 1
@@ -40,9 +39,6 @@ class ProductionConfig(BaseConfig):
 class TestConfig(BaseConfig):
     DEBUG = False
     TESTING = True
-
-    # CELERY_CONFIG = {'CELERY_ALWAYS_EAGER': True}
-    WTF_CSRF_ENABLED = False
 
     # SQLALCHEMY_DATABASE_URI = "sqlite:///subscription_db"
     SQLALCHEMY_DATABASE_URI = "sqlite://"  # in-memory database
