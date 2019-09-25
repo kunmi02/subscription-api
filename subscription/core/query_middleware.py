@@ -1,25 +1,8 @@
-from dateutil import parser
 from flask import current_app, request
 from flask_sqlalchemy import BaseQuery
 
-# from subscription.core.utils.helpers import get_start_of_day, get_end_of_day
-
 
 class CustomQuery(BaseQuery):
-
-    # @property
-    # def active(self):
-    #     return self.filter_by(status_id=ACTIVE_STATUS_ID)
-
-    # def filter_between(self, model, from_date, to_date):
-    #     if None in [from_date, to_date]:
-    #         return self
-    #
-    #     # TODO: Enforce D-M-Y order and document this
-    #     from_date = get_start_of_day(parser.parse(from_date))
-    #     to_date = get_end_of_day(parser.parse(to_date))
-    #
-    #     return self.filter(model.added_at.between(from_date, to_date))
 
     def paginate(self,
                  page=None,
@@ -68,5 +51,4 @@ class CustomQuery(BaseQuery):
         }
 
         return pagination
-
 
