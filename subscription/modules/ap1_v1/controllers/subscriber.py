@@ -2,10 +2,10 @@ from flask import Blueprint, request
 
 from subscription.core.models import db, Subscription
 from subscription.core.utils import (
-     make_created_response,
-     make_failure_response,
-     make_success_response)
-
+    make_created_response,
+    make_deleted_response,
+    make_failure_response,
+    make_success_response)
 
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1.0')
 
@@ -18,7 +18,7 @@ def add_subscriber():
         return make_failure_response(400, 'Bad Request')
 
     subscription = Subscription.query.filter(Subscription.email ==
-                                        email_address).first()
+                                             email_address).first()
 
     if subscription is not None:
         return make_failure_response(409, 'Subscriber already exists')
@@ -49,10 +49,10 @@ def delete_subscriber():
 
     try:
         Subscription.query.filter(Subscription.email == email_address).one()
-    except:
+    except NameError:
         return make_failure_response(403, 'Subscriber not found')
 
     Subscription.query.filter(Subscription.email == email_address).delete()
     db.session.commit()
 
-    return make_success_response('Subscriber deleted')
+    return make_deleted_response()

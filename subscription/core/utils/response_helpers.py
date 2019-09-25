@@ -40,3 +40,7 @@ def make_success_response(response_data, http_code=200, meta=None):
 def make_created_response(response_data, meta=None):
 
     return make_success_response(response_data, HTTP_CODES.created, meta)
+
+
+def make_deleted_response():
+    return '', HTTP_CODES.no_content
