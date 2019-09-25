@@ -45,7 +45,7 @@ def delete_subscriber():
     email_address = request.args.get('email_address')
 
     if email_address is None:
-        return make_failure_response(409, 'Bad Request')
+        return make_failure_response(400, 'Bad Request')
 
     try:
         Subscription.query.filter(Subscription.email == email_address).one()
