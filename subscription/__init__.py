@@ -2,7 +2,7 @@ from flask import Flask
 
 
 def _setup_blueprints(app):
-    from subscription.modules.api_v1.controllers import (subscriber)
+    from subscription.modules.api_v1.controllers import subscriber
 
     app.register_blueprint(subscriber.api_v1)
 
