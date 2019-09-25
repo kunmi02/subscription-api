@@ -1,4 +1,5 @@
 from flask import Blueprint, request
+from sqlalchemy import exc
 
 from subscription.core.models import db, Subscription
 from subscription.core.utils import (
@@ -11,7 +12,7 @@ api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1.0')
 
 
 @api_v1.route('/subscriptions', methods=['POST'])
-def add_subscriber():
+def add_subscription():
     email_address = request.args.get('email_address')
 
     if email_address is None:
@@ -31,17 +32,17 @@ def add_subscriber():
 
 
 @api_v1.route('/subscriptions', methods=['GET'])
-def get_subscribers():
+def get_subscriptions():
     query = Subscription.query
 
     pagination = query.paginate()
-    response_data = [subscriber.as_json() for subscriber in pagination.items]
+    response_data = [susbscription.as_json() for susbscription in pagination.items]
 
     return make_success_response(response_data, meta=pagination.meta)
 
 
 @api_v1.route('/subscriptions', methods=['DELETE'])
-def delete_subscriber():
+def delete_subscription():
     email_address = request.args.get('email_address')
 
     if email_address is None:
@@ -49,8 +50,8 @@ def delete_subscriber():
 
     try:
         Subscription.query.filter(Subscription.email == email_address).one()
-    except NameError:
-        return make_failure_response(403, 'Subscriber not found')
+    except exc.SQLAlchemyError:
+        return make_failure_response(404, 'Subscriber not found')
 
     Subscription.query.filter(Subscription.email == email_address).delete()
     db.session.commit()
