@@ -59,3 +59,4 @@ def delete_subscription():
     db.session.commit()
 
     return make_deleted_response()
+

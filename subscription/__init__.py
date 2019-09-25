@@ -28,3 +28,4 @@ def create_app(configuration_mode):
     _bind_home_url(app)
 
     return app
+

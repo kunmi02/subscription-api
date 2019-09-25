@@ -17,3 +17,4 @@ class Subscription(db.Model):
             'email': self.email,
             'added_at': self.added_at.isoformat()
         }
+

@@ -83,3 +83,4 @@ def load_configuration(app, mode):
         False: 'test_config.py'
     }[configuration != TestConfig]
     app.config.from_pyfile(instance_config, silent=True)
+
