@@ -1,11 +1,11 @@
-from flask import Blueprint
-from flask import request
+from flask import Blueprint, request
 
-from subscription.core.models import Subscription
-from subscription.core.utils import (make_success_response,
-                                     make_created_response,
-                                     make_failure_response)
-from subscription.core.models import db
+from subscription.core.models import db, Subscription
+from subscription.core.utils import (
+    make_created_response,
+    make_failure_response,
+    make_success_response)
+
 
 api_v1 = Blueprint('api_v1', __name__, url_prefix='/api/v1.0')
 
@@ -15,15 +15,15 @@ def add_subscriber():
     email_address = request.args.get('email_address')
 
     if email_address is None:
-        return make_failure_response(403, 'Error')
+        return make_failure_response(400, 'Bad Request')
 
-    email = Subscription.query.filter(Subscription.email == email_address).first()
+    subscriber = Subscription.query.filter(Subscription.email == email_address).first()
 
-    if email is not None:
-        return make_failure_response(409, 'email already exists')
+    if subscriber is not None:
+        return make_failure_response(409, 'Subscriber already exists')
 
-    subscriber = Subscription(email=email_address)
-    db.session.add(subscriber)
+    subscription = Subscription(email=email_address)
+    db.session.add(subscription)
     db.session.commit()
 
     return make_created_response('Subscriber added successfully')
@@ -44,7 +44,7 @@ def delete_subscriber():
     email_address = request.args.get('email_address')
 
     if email_address is None:
-        return make_failure_response(409, 'Error')
+        return make_failure_response(409, 'Bad Request')
 
     try:
         Subscription.query.filter(Subscription.email == email_address).one()
