@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from sqlalchemy import exc
 
+
 from subscription.core.models import db, Subscription
 from subscription.core.utils import (
     make_created_response,
