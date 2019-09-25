@@ -2,14 +2,12 @@ from flask import Flask
 
 
 def _setup_blueprints(app):
-    from subscription.modules.ap1_v1.controllers import (
-        subscriber
-    )
-    #
+    from subscription.modules.api_v1.controllers import (subscriber)
+
     app.register_blueprint(subscriber.api_v1)
 
 
-def _bind_home_url(app):  # DEBUG
+def _bind_home_url(app):
     @app.route('/')
     def index():
 

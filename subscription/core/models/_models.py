@@ -1,6 +1,5 @@
 from datetime import datetime
 
-
 from subscription.core import db
 
 
