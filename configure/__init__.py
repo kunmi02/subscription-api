@@ -19,20 +19,12 @@ class BaseConfig(object):
     PAGINATION_DEFAULT_PAGE = 1
     PAGINATION_DEFAULT_PER_PAGE = 20
 
-    AUTH_REQUIREMENT_ENABLED = True
-    CHECKSUM_REQUIREMENT_ENABLED = True
-
     DEFAULT_REQUESTS_TIMEOUT = 11.0  # seconds
-
-    RECEIPT_LENGTH = 17
 
 
 class DevelopmentConfig(BaseConfig):
     DEBUG = True
     TESTING = False
-
-    # AUTH_REQUIREMENT_ENABLED = False
-    CHECKSUM_REQUIREMENT_ENABLED = False
 
 
 class PilotConfig(BaseConfig):
