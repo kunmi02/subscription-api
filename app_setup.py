@@ -11,4 +11,3 @@ with application.app_context():
     db.init_app(application)
     db.Model.metadata.reflect(db.engine)  # load existing DB schema
     db.create_all()
-
